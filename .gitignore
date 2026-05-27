@@ -1,0 +1,124 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+.venv_*/
+venv/
+env/
+ENV/
+D:/venvs/
+d:/venvs/
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+kaggle.json
+.kaggle/
+credentials.json
+token.json
+*.key
+*.pem
+
+# =========================
+# Dataset / data
+# =========================
+data/
+Dataset-Meat/
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# =========================
+# Models / checkpoints / artifacts
+# =========================
+models/
+artifacts/models/
+artifacts/checkpoints/
+artifacts/*.pt
+artifacts/*.pth
+artifacts/*.onnx
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.keras
+
+# =========================
+# Generated outputs
+# =========================
+app/static/outputs/
+outputs/
+runs/
+logs/
+artifacts/logs/
+artifacts/figures/
+artifacts/history/
+artifacts/predictions/
+reports/*.pdf
+reports/*.png
+reports/*.jpg
+reports/*.csv
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# =========================
+# Cache
+# =========================
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =========================
+# Streamlit / FastAPI temporary
+# =========================
+.streamlit/secrets.toml
+*.log
+
+# =========================
+# Keep folder structure
+# =========================
+!app/
+!app/**/*.py
+!app/**/*.html
+!app/**/*.css
+!app/**/*.js
+
+!notebooks/
+!notebooks/*.ipynb
+
+!src/
+!src/**/*.py
+
+!requirements.txt
+!README.md
+!.gitignore

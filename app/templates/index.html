@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meat Freshness Classifier</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="page-bg">
+        <nav class="navbar navbar-expand-lg glass-nav">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="/">
+                    <i class="bi bi-fire"></i> Meat AI Classifier
+                </a>
+                <div class="d-flex gap-2">
+                    <span class="badge rounded-pill text-bg-danger">PyTorch CNN</span>
+                    <span class="badge rounded-pill text-bg-warning">Grad-CAM</span>
+                    <span class="badge rounded-pill text-bg-dark">Groq AI</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container py-5">
+            <section class="hero-card mb-4">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <h1>Phân loại thịt tươi / thịt hỏng</h1>
+                        <p>
+                            Ứng dụng demo sử dụng mô hình CNN huấn luyện từ đầu bằng PyTorch, trực quan hóa Grad-CAM
+                            và trợ lý AI giải thích kết quả dự đoán.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="hero-stats">
+                            <div>
+                                <span>Model</span>
+                                <strong>BasicCNN</strong>
+                            </div>
+                            <div>
+                                <span>Input</span>
+                                <strong>224×224</strong>
+                            </div>
+                            <div>
+                                <span>Classes</span>
+                                <strong>Fresh / Spoiled</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <section class="app-card h-100">
+                        <div class="section-title">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <span>Upload ảnh kiểm tra</span>
+                        </div>
+
+                        <div class="mode-switch mb-3">
+                            <button id="singleModeBtn" class="mode-btn active" type="button">
+                                <i class="bi bi-image"></i> Ảnh đơn
+                            </button>
+                            <button id="batchModeBtn" class="mode-btn" type="button">
+                                <i class="bi bi-folder2-open"></i> Hàng loạt
+                            </button>
+                        </div>
+
+                        <div id="singleModePanel">
+                            <form id="uploadForm">
+                                <label id="uploadBox" class="upload-box" for="imageInput">
+                                    <input id="imageInput" type="file" accept="image/*" hidden>
+                                    <i class="bi bi-image"></i>
+                                    <h5>Kéo thả hoặc chọn ảnh thịt</h5>
+                                    <p>Hỗ trợ JPG, JPEG, PNG, BMP, WEBP</p>
+                                </label>
+
+                                <div id="imagePreviewWrap" class="mt-4 d-none">
+                                    <div class="image-frame preview-frame">
+                                        <img id="imagePreview" class="preview-img image-contain" alt="Preview" loading="lazy" decoding="async">
+                                    </div>
+
+                                    <button id="changeImageBtn" class="btn btn-light-soft w-100 mt-3" type="button">
+                                        <i class="bi bi-arrow-repeat"></i> Đổi ảnh khác
+                                    </button>
+                                </div>
+
+                                <div id="imageInfoWrap" class="mt-4 d-none">
+                                    <h6 class="small-heading">Thông tin ảnh</h6>
+                                    <div class="info-grid">
+                                        <div><span>Tên file</span><strong id="infoName">-</strong></div>
+                                        <div><span>Định dạng</span><strong id="infoFormat">-</strong></div>
+                                        <div><span>Kích thước</span><strong id="infoSize">-</strong></div>
+                                        <div><span>Độ phân giải</span><strong id="infoResolution">-</strong></div>
+                                    </div>
+                                </div>
+
+                                <button id="predictBtn" class="btn btn-main w-100 mt-4 d-none" type="submit">
+                                    <i class="bi bi-search"></i> Dự đoán
+                                </button>
+                            </form>
+                        </div>
+
+                        <div id="batchModePanel" class="d-none">
+                            <form id="batchForm">
+                                <div id="batchUploadChoices" class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="batch-box" for="batchArchiveInput">
+                                            <input id="batchArchiveInput" type="file" accept=".zip,.rar" hidden>
+                                            <i class="bi bi-file-zip"></i>
+                                            <h5>Upload file .zip / .rar</h5>
+                                            <p>Ảnh sẽ được giải nén và dự đoán hàng loạt</p>
+                                        </label>
+                                    </div>
+                            
+                                    <div class="col-md-6">
+                                        <label class="batch-box" for="batchFolderInput">
+                                            <input id="batchFolderInput" type="file" accept="image/*" multiple webkitdirectory hidden>
+                                            <i class="bi bi-folder"></i>
+                                            <h5>Upload folder ảnh</h5>
+                                            <p>Chọn một thư mục chứa nhiều ảnh</p>
+                                        </label>
+                                    </div>
+                                </div>
+                            
+                                <div id="batchSelectedInfo" class="batch-selected-card d-none">
+                                    <div class="batch-selected-icon">
+                                        <i id="batchSelectedIcon" class="bi bi-file-earmark-zip"></i>
+                                    </div>
+                            
+                                    <div class="batch-selected-content">
+                                        <h5 id="batchSelectedName">-</h5>
+                            
+                                        <div class="batch-selected-grid">
+                                            <div>
+                                                <span>Số ảnh</span>
+                                                <strong id="batchSelectedCount">-</strong>
+                                            </div>
+                                            <div>
+                                                <span>Định dạng</span>
+                                                <strong id="batchSelectedFormat">-</strong>
+                                            </div>
+                                            <div>
+                                                <span>Kích thước</span>
+                                                <strong id="batchSelectedSize">-</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <button id="changeBatchFileBtn" class="btn btn-light-soft w-100 mt-3" type="button">
+                                        <i class="bi bi-arrow-repeat"></i> Chọn file / folder khác
+                                    </button>
+                                </div>
+                            
+                                <button id="batchPredictBtn" class="btn btn-main w-100 mt-3 d-none" type="submit">
+                                    <i class="bi bi-layers"></i> Dự đoán hàng loạt và xuất PDF
+                                </button>
+                            </form>
+
+                           
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-lg-7">
+                    <section class="app-card h-100">
+                        <div class="section-title">
+                            <i class="bi bi-activity"></i>
+                            <span>Kết quả dự đoán</span>
+                        </div>
+
+                        <div id="emptyResult" class="empty-state">
+                            <i class="bi bi-stars"></i>
+                            <h5>Chưa có kết quả</h5>
+                            <p>Upload ảnh và bấm Dự đoán để xem kết quả phân loại.</p>
+                        </div>
+
+                        <div id="resultWrap" class="d-none">
+                            <div class="result-line">
+                                <span>Class dự đoán:</span>
+                                <strong id="predClass">-</strong>
+                                <b id="predConfidence">0%</b>
+                            </div>
+
+                            <div class="mt-4">
+                                <h6 class="small-heading">Xác suất 2 lớp</h6>
+                                <div class="chart-box">
+                                    <canvas id="probChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-6">
+                                    <h6 class="small-heading">Ảnh gốc</h6>
+                                    <div class="image-frame compare-frame">
+                                        <img id="resultOriginalImage" class="compare-img image-contain" alt="Ảnh gốc" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h6 class="small-heading">Grad-CAM overlay</h6>
+                                    <div class="image-frame compare-frame">
+                                        <img id="gradcamImage" class="compare-img image-contain" alt="Grad-CAM" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="batchResultWrap" class="d-none">
+                            <div class="result-line">
+                                <span>Đã xử lý:</span>
+                                <strong id="batchCount">0 ảnh</strong>
+                                <a id="batchReportLink" class="btn btn-light-soft ms-auto" href="#" target="_blank" download>
+                                    <i class="bi bi-file-earmark-pdf"></i> Tải báo cáo PDF
+                                </a>
+                            </div>
+                        
+                            <div class="empty-state batch-ready-state mt-4">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                                <h5>Báo cáo hàng loạt đã sẵn sàng</h5>
+                                <p>Bấm nút tải PDF để lưu báo cáo về máy tính.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="chatWidget" class="chat-widget">
+        <button id="chatToggle" class="chat-toggle" type="button" aria-label="Mở chat AI">
+            <i class="bi bi-chat-dots-fill"></i>
+        </button>
+
+        <div id="chatPanel" class="chat-panel d-none">
+            <div class="chat-header">
+                <div>
+                    <strong>AI Assistant</strong>
+                    <span>Hỏi đáp về thịt & Grad-CAM</span>
+                </div>
+                <button id="chatClose" type="button" aria-label="Đóng chat AI">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div id="chatMessages" class="chat-messages">
+                <div class="msg bot">
+                    <div class="bubble">
+                        Xin chào! Hãy upload ảnh và dự đoán, sau đó bạn có thể hỏi tôi về kết quả hoặc Grad-CAM.
+                    </div>
+                </div>
+            </div>
+
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" type="text" placeholder="Nhập câu hỏi...">
+                <button type="submit" aria-label="Gửi câu hỏi">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay d-none">
+        <div class="spinner-border text-light" role="status"></div>
+        <p>Đang xử lý ảnh...</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/app.js" defer></script>
+</body>
+</html>
