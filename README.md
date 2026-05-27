@@ -1,49 +1,170 @@
 # CNN Meat Classification
 
-Phân loại thịt tươi và thịt hỏng bằng mô hình CNN tự xây dựng từ đầu với PyTorch, trực quan hóa Grad-CAM và giao diện web FastAPI hỗ trợ dự đoán ảnh đơn, dự đoán hàng loạt và xuất báo cáo PDF.
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
-</p>
+**Dự án phân loại thịt tươi và thịt hỏng bằng mô hình CNN tự xây dựng từ đầu với PyTorch, Grad-CAM và web demo FastAPI.**
+
+<br/>
+
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-CNN-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Web%20API-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-Frontend-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Style-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-Client%20Logic-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)
+
+</div>
 
 ---
 
-## 1. Giới thiệu dự án
+## 1. Project Title & Catchphrase
 
-CNN Meat Classification là dự án phân loại ảnh thịt thành hai lớp:
+**CNN Meat Classification** là dự án phân loại ảnh thịt thành hai lớp: **Fresh** và **Spoiled**.
 
-| Lớp | Ý nghĩa |
+Dự án xây dựng pipeline đầy đủ từ xử lý dữ liệu, loại ảnh trùng, chia train/validation/test, huấn luyện CNN tự xây dựng, đánh giá mô hình, trực quan hóa Grad-CAM và triển khai web demo bằng FastAPI.
+
+> Dự án phục vụ mục đích học tập, nghiên cứu và demo AI. Kết quả dự đoán chỉ mang tính tham khảo, không thay thế quy trình kiểm định chất lượng thực phẩm trong thực tế.
+
+---
+
+## 2. Quick Demo & Visuals
+
+<div align="center">
+
+[Dataset Kaggle](https://www.kaggle.com/datasets/tanhphp/meatmeat-quality-classification) ·
+[Source Code](https://github.com/franceto/CNN-Meat-Classification) ·
+[FastAPI Web Demo](#)
+
+<br/><br/>
+
+<img src="src/overview.png" alt="Web interface overview" width="90%" />
+<br/><br/>
+<img src="src/pre_single.png" alt="Single image prediction" width="90%" />
+<br/><br/>
+<img src="src/predict.png" alt="Prediction and Grad-CAM" width="90%" />
+
+</div>
+
+---
+
+## 3. Tính Năng Nổi Bật
+
+- **Phân loại ảnh thịt 2 lớp:** nhận diện ảnh thuộc nhóm `Fresh` hoặc `Spoiled`.
+- **CNN tự xây dựng từ đầu:** không dùng pretrained model và không dùng transfer learning.
+- **Kiểm soát data leakage:** loại ảnh trùng bằng hash trước khi chia dữ liệu.
+- **Grad-CAM:** trực quan hóa vùng ảnh mô hình tập trung khi dự đoán.
+- **Web demo FastAPI:** hỗ trợ dự đoán ảnh đơn, dự đoán hàng loạt, upload `.zip`, `.rar`, folder ảnh và xuất báo cáo PDF.
+- **AI chat bằng Groq API:** hỗ trợ giải thích kết quả dự đoán và Grad-CAM trong giao diện demo.
+
+---
+
+## 4. Công Nghệ Sử Dụng
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-Core%20Pipeline-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-Model%20Training-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![TorchVision](https://img.shields.io/badge/TorchVision-Transforms-EE4C2C?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20Server-111827?style=for-the-badge)
+![HTML5](https://img.shields.io/badge/HTML5-Frontend-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-UI%20Style-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-Client%20Logic-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![OpenCV](https://img.shields.io/badge/OpenCV-Image%20Processing-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
+![Pillow](https://img.shields.io/badge/Pillow-Image%20Loading-3776AB?style=for-the-badge)
+![Pandas](https://img.shields.io/badge/Pandas-Experiment%20Logs-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-Numerical%20Processing-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-Metrics-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualization-11557C?style=for-the-badge)
+![Seaborn](https://img.shields.io/badge/Seaborn-Visualization-4B8BBE?style=for-the-badge)
+![ReportLab](https://img.shields.io/badge/ReportLab-PDF%20Report-111827?style=for-the-badge)
+![Groq](https://img.shields.io/badge/Groq-AI%20Chat-F55036?style=for-the-badge)
+![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)
+
+</div>
+
+### Thành phần kỹ thuật
+
+| Nhóm | Công nghệ | Vai trò |
+|---|---|---|
+| Deep Learning | PyTorch, TorchVision | Xây dựng, huấn luyện và suy luận mô hình CNN |
+| Xử lý ảnh | Pillow, OpenCV | Đọc ảnh, resize, tạo Grad-CAM overlay |
+| Phân tích dữ liệu | NumPy, Pandas | Thống kê dữ liệu và lưu kết quả thực nghiệm |
+| Đánh giá mô hình | scikit-learn | Accuracy, classification report, confusion matrix |
+| Trực quan hóa | Matplotlib, Seaborn, Chart.js | Biểu đồ EDA, training curve và xác suất dự đoán |
+| Web backend | FastAPI, Uvicorn | API dự đoán ảnh, batch prediction và download PDF |
+| Web frontend | HTML, CSS, JavaScript, Bootstrap Icons | Giao diện demo người dùng |
+| Giải thích mô hình | Grad-CAM | Trực quan hóa vùng ảnh ảnh hưởng đến dự đoán |
+| Báo cáo | ReportLab | Sinh báo cáo PDF cho dự đoán hàng loạt |
+| AI assistant | Groq API | Chatbot giải thích kết quả và Grad-CAM |
+
+---
+
+## 5. Triển Khai Nhanh
+
+**Prerequisites**
+
+- Python 3.x
+- Git
+- Kaggle API nếu muốn tải dataset bằng CLI
+- GPU NVIDIA nếu muốn huấn luyện nhanh hơn
+- 7-Zip nếu muốn dùng file `.rar` cho dự đoán hàng loạt
+- File model final nếu chỉ muốn chạy demo: `artifacts/models/basic_cnn_final.pt`
+
+```bash
+# Clone repository
+git clone https://github.com/franceto/CNN-Meat-Classification.git
+cd CNN-Meat-Classification
+
+# Tạo và kích hoạt môi trường ảo trên Windows PowerShell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Cập nhật pip
+python -m pip install -U pip
+
+# Cài thư viện phụ thuộc
+pip install -r requirements.txt
+
+# Nếu muốn dùng PyTorch CUDA 12.6
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+# Tải dataset từ Kaggle
+kaggle datasets download -d tanhphp/meatmeat-quality-classification -p data/raw --unzip
+
+# Chạy web demo FastAPI
+uvicorn app.main:app --reload
+```
+
+Mở trình duyệt tại:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## 6. Tài Liệu Dự Án
+
+### Bài toán
+
+| Thành phần | Mô tả |
 |---|---|
-| Fresh | Thịt tươi |
-| Spoiled | Thịt hỏng |
+| Input | Ảnh thịt |
+| Output | `Fresh` hoặc `Spoiled` |
+| Task | Binary image classification |
+| Model | BasicCNN tự xây dựng từ đầu |
+| Pretrained | Không sử dụng |
+| Transfer learning | Không sử dụng |
+| Demo | FastAPI web app |
+| Giải thích mô hình | Grad-CAM |
 
-Dự án xây dựng pipeline hoàn chỉnh từ dữ liệu thô đến ứng dụng demo:
+### Dataset
 
-- Kiểm tra dữ liệu ảnh, thống kê số lượng lớp và kích thước ảnh.
-- Loại bỏ ảnh trùng lặp để hạn chế data leakage.
-- Chia dữ liệu train/validation/test theo stratified split.
-- Huấn luyện mô hình CNN từ đầu, không dùng pretrained model và không dùng transfer learning.
-- Trực quan hóa Grad-CAM để quan sát vùng ảnh mô hình tập trung khi dự đoán.
-- Xây dựng giao diện FastAPI + HTML/CSS/JavaScript hỗ trợ dự đoán ảnh đơn và dự đoán hàng loạt.
-- Xuất báo cáo PDF cho dự đoán hàng loạt.
-- Tích hợp AI chat bằng Groq API để giải thích kết quả và Grad-CAM.
+Nguồn dữ liệu chính: [MeatMeat quality classification - Kaggle](https://www.kaggle.com/datasets/tanhphp/meatmeat-quality-classification)
 
-> Dự án phục vụ mục đích học tập, nghiên cứu và demo AI. Kết quả dự đoán chỉ mang tính tham khảo, không thay thế kiểm định chất lượng thực phẩm trong thực tế.
-
----
-
-## 2. Dataset
-
-Nguồn dữ liệu chính của dự án:
-
-[MeatMeat quality classification - Kaggle](https://www.kaggle.com/datasets/tanhphp/meatmeat-quality-classification)
-
-Trong thực nghiệm hiện tại, dữ liệu được tổ chức theo cấu trúc hai thư mục lớp:
+Cấu trúc dữ liệu sau khi tổ chức:
 
 ```text
 Dataset-Meat/
@@ -59,40 +180,19 @@ Sau khi kiểm tra và loại bỏ ảnh trùng lặp, bộ dữ liệu dùng ch
 | Validation | 73 | 39 | 112 |
 | Test | 73 | 39 | 112 |
 
-### Phân bố dữ liệu
+### Hình ảnh dữ liệu
 
-<p align="center">
-  <img src="src/di_class.png" width="720" />
-</p>
+<div align="center">
 
-### Một số ảnh mẫu theo từng lớp
+<img src="src/di_class.png" alt="Class distribution" width="80%" />
+<br/><br/>
+<img src="src/meat.png" alt="Sample images" width="90%" />
+<br/><br/>
+<img src="src/agu_train.png" alt="Augmented training images" width="90%" />
 
-<p align="center">
-  <img src="src/meat.png" width="820" />
-</p>
+</div>
 
----
-
-## 3. Công nghệ sử dụng
-
-| Nhóm | Công nghệ | Vai trò |
-|---|---|---|
-| Deep Learning | PyTorch, TorchVision | Xây dựng, huấn luyện và suy luận mô hình CNN |
-| Xử lý ảnh | Pillow, OpenCV | Đọc ảnh, resize, tạo Grad-CAM overlay |
-| Phân tích dữ liệu | NumPy, Pandas | Thống kê dữ liệu và lưu kết quả thực nghiệm |
-| Đánh giá mô hình | scikit-learn | Accuracy, classification report, confusion matrix |
-| Trực quan hóa | Matplotlib, Seaborn, Chart.js | Biểu đồ EDA, training curve, xác suất dự đoán |
-| Web backend | FastAPI, Uvicorn | API dự đoán ảnh, batch prediction, download PDF |
-| Web frontend | HTML, CSS, JavaScript, Bootstrap Icons | Giao diện demo người dùng |
-| Giải thích mô hình | Grad-CAM | Trực quan hóa vùng ảnh ảnh hưởng đến dự đoán |
-| Báo cáo | ReportLab | Sinh báo cáo PDF cho dự đoán hàng loạt |
-| AI assistant | Groq API | Chatbot giải thích kết quả và Grad-CAM |
-
----
-
-## 4. Tiền xử lý và tăng cường dữ liệu
-
-Pipeline tiền xử lý chính:
+### Tiền xử lý và tăng cường dữ liệu
 
 | Bước | Mô tả |
 |---|---|
@@ -115,17 +215,9 @@ transforms.RandomAffine(degrees=0, translate=(0.02, 0.02), scale=(0.97, 1.03), s
 transforms.RandomPerspective(distortion_scale=0.03, p=0.08)
 ```
 
-### Ảnh sau tăng cường dữ liệu
+### Mô hình
 
-<p align="center">
-  <img src="src/agu_train.png" width="820" />
-</p>
-
----
-
-## 5. Mô hình
-
-Mô hình final là BasicCNN tự xây dựng từ đầu, không dùng pretrained model.
+Mô hình final là **BasicCNN** tự xây dựng từ đầu.
 
 | Thành phần | Cấu hình |
 |---|---|
@@ -134,7 +226,7 @@ Mô hình final là BasicCNN tự xây dựng từ đầu, không dùng pretrain
 | Số lớp đầu ra | 2 |
 | Activation | SiLU |
 | Regularization | Dropout2D, Dropout |
-| Số tham số | 758,434 |
+| Số tham số | 758.434 |
 | Loss | Weighted CrossEntropyLoss |
 | Optimizer | AdamW |
 | Scheduler | Warmup 5 epochs + Cosine decay |
@@ -145,24 +237,20 @@ Kiến trúc tổng quát:
 
 ```text
 Input image
-→ ConvBN + MaxPool
-→ ConvBN + MaxPool
-→ ConvBN + MaxPool
-→ Dropout2D
-→ ConvBN + MaxPool
-→ Dropout2D
-→ ConvBN
-→ AdaptiveAvgPool2D
-→ Dropout
-→ Linear classifier
-→ Fresh / Spoiled
+-> ConvBN + MaxPool
+-> ConvBN + MaxPool
+-> ConvBN + MaxPool
+-> Dropout2D
+-> ConvBN + MaxPool
+-> Dropout2D
+-> ConvBN
+-> AdaptiveAvgPool2D
+-> Dropout
+-> Linear classifier
+-> Fresh / Spoiled
 ```
 
----
-
-## 6. Quá trình thực nghiệm
-
-Dự án đã thử nhiều hướng khác nhau trước khi chọn mô hình final.
+### Quá trình thực nghiệm
 
 | Thực nghiệm | Model | Split | Augmentation | Cân bằng dữ liệu | Loss | Scheduler | Params | Best Val Acc |
 |---|---|---|---|---|---|---|---:|---:|
@@ -173,19 +261,15 @@ Dự án đã thử nhiều hướng khác nhau trước khi chọn mô hình fi
 | Exp 05 | CNN residual + SE attention | 70/15/15 | Resize 240, crop, flip, affine, perspective | WeightedRandomSampler + class weight | Focal Loss | Warmup + Cosine | 2.81M | 0.9286 |
 | Exp 06 - Final | BasicCNN | 70/15/15 | Resize 240, RandomResizedCrop scale=(0.94,1.0), ratio=(0.97,1.03), HorizontalFlip, VerticalFlip, Rotation, Affine, Perspective | Class weight | Weighted CrossEntropy | Warmup + Cosine | 758K | 0.9464 |
 
-Mô hình final được chọn vì đạt cân bằng tốt giữa độ chính xác, độ ổn định, kích thước mô hình và khả năng triển khai web demo.
+Mô hình final được chọn vì cân bằng tốt giữa độ chính xác, độ ổn định, kích thước mô hình và khả năng triển khai web demo.
 
----
+### Kết quả huấn luyện và đánh giá
 
-## 7. Kết quả huấn luyện và đánh giá
+<div align="center">
 
-### Training curve
+<img src="src/result.png" alt="Training curve" width="90%" />
 
-<p align="center">
-  <img src="src/result.png" width="860" />
-</p>
-
-### Kết quả trên tập test nội bộ
+</div>
 
 | Metric | Giá trị |
 |---|---:|
@@ -213,17 +297,7 @@ Confusion matrix trên test nội bộ:
 | Fresh | 67 | 6 |
 | Spoiled | 5 | 34 |
 
-### Ví dụ dự đoán và Grad-CAM
-
-<p align="center">
-  <img src="src/predict.png" width="860" />
-</p>
-
----
-
-## 8. Đánh giá bổ sung trên dataset công khai khác nguồn
-
-Ngoài test nội bộ, mô hình được kiểm tra thêm trên một public dataset khác nguồn để quan sát khả năng tổng quát hóa.
+### Đánh giá bổ sung trên dataset công khai khác nguồn
 
 | Thiết lập | Accuracy | Fresh Recall | Spoiled Recall |
 |---|---:|---:|---:|
@@ -232,11 +306,7 @@ Ngoài test nội bộ, mô hình được kiểm tra thêm trên một public d
 
 Kết quả này cho thấy mô hình có thể gặp domain shift khi dữ liệu kiểm thử khác nguồn so với dữ liệu huấn luyện. Threshold calibration giúp tăng độ nhạy với lớp Spoiled, nhưng không được dùng tùy tiện trong demo final vì threshold quá thấp có thể khiến ảnh Fresh bị cảnh báo sai trong một số tình huống.
 
----
-
-## 9. Web demo
-
-Ứng dụng web được xây dựng bằng FastAPI, HTML, CSS và JavaScript.
+### Web demo
 
 Các chức năng chính:
 
@@ -248,19 +318,12 @@ Các chức năng chính:
 - Xuất báo cáo PDF cho dự đoán hàng loạt.
 - Floating AI chat sử dụng Groq API để giải thích kết quả.
 
-### Tổng quan giao diện
+<div align="center">
 
-<p align="center">
-  <img src="src/overview.png" width="900" />
-</p>
-
-### Dự đoán ảnh đơn
-
-<p align="center">
-  <img src="src/pre_single.png" width="900" />
-</p>
-
-### Dự đoán hàng loạt
+<img src="src/overview.png" alt="Overview" width="90%" />
+<br/><br/>
+<img src="src/pre_single.png" alt="Single prediction" width="90%" />
+<br/><br/>
 
 <table>
   <tr>
@@ -275,15 +338,13 @@ Các chức năng chính:
   </tr>
 </table>
 
-### AI chat
+<br/>
 
-<p align="center">
-  <img src="src/ai_chat.png" width="420" />
-</p>
+<img src="src/ai_chat.png" alt="AI chat" width="420" />
 
----
+</div>
 
-## 10. Cấu trúc dự án
+### Cấu trúc dự án
 
 ```text
 CNN-Meat-Classification/
@@ -319,7 +380,7 @@ CNN-Meat-Classification/
 └── README.md
 ```
 
-Các thư mục không push lên GitHub:
+Các thư mục và file không nên push lên GitHub:
 
 ```text
 data/
@@ -330,48 +391,7 @@ app/static/outputs/
 kaggle.json
 ```
 
----
-
-## 11. Cài đặt môi trường
-
-### Clone repository
-
-```bash
-git clone https://github.com/franceto/CNN-Meat-Classification.git
-cd CNN-Meat-Classification
-```
-
-### Tạo virtual environment
-
-Windows PowerShell:
-
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -U pip
-```
-
-### Cài thư viện
-
-```powershell
-pip install -r requirements.txt
-```
-
-Nếu muốn dùng PyTorch CUDA, cài PyTorch theo phiên bản CUDA phù hợp với máy. Ví dụ với CUDA 12.6:
-
-```powershell
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
-```
-
-Kiểm tra CUDA:
-
-```powershell
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NO CUDA')"
-```
-
----
-
-## 12. Cấu hình Kaggle API
+### Cấu hình Kaggle API
 
 Tải `kaggle.json` từ tài khoản Kaggle và đặt tại:
 
@@ -385,7 +405,7 @@ Kiểm tra Kaggle API:
 kaggle datasets list
 ```
 
-Tải dataset từ Kaggle:
+Tải dataset:
 
 ```powershell
 kaggle datasets download -d tanhphp/meatmeat-quality-classification -p data/raw --unzip
@@ -401,9 +421,7 @@ data/raw/Dataset-Meat/
 
 Không commit file `kaggle.json` lên GitHub.
 
----
-
-## 13. Huấn luyện mô hình
+### Huấn luyện mô hình
 
 Quy trình huấn luyện được thực hiện trong notebook:
 
@@ -438,9 +456,7 @@ artifacts/models/basic_cnn_final.pt
 
 Do model weights không được push lên GitHub, để chạy demo trên máy mới cần tự huấn luyện lại hoặc đặt file model final vào đúng đường dẫn trên.
 
----
-
-## 14. Chạy ứng dụng web
+### Chạy ứng dụng web
 
 Tạo file `.env` ở thư mục gốc nếu muốn dùng AI chat:
 
@@ -463,31 +479,44 @@ http://127.0.0.1:8000
 
 Nếu dùng file `.rar` cho dự đoán hàng loạt, cần cài 7-Zip và đảm bảo lệnh `7z` có trong PATH.
 
----
+### Git ignore khuyến nghị
 
-## 15. Lưu ý khi sử dụng
+```text
+.venv/
+data/
+artifacts/models/
+artifacts/checkpoints/
+app/static/outputs/
+.env
+kaggle.json
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pt
+*.pth
+*.zip
+*.rar
+```
+
+### Lưu ý sử dụng
 
 - Repository không bao gồm dataset, model weights, checkpoint, file `.env` hoặc Kaggle API token.
-- Mô hình được huấn luyện cho dữ liệu ảnh thịt trong phạm vi dataset của dự án, kết quả có thể thay đổi nếu ảnh khác điều kiện chụp, ánh sáng, loại thịt hoặc nền ảnh.
-- Grad-CAM chỉ cho biết vùng ảnh mô hình tập trung nhiều hơn, không khẳng định tuyệt đối rằng mô hình đang suy luận đúng bản chất sinh học của thịt.
+- Mô hình được huấn luyện trong phạm vi dataset của dự án, kết quả có thể thay đổi nếu ảnh khác điều kiện chụp, ánh sáng, loại thịt hoặc nền ảnh.
+- Grad-CAM chỉ cho biết vùng ảnh mô hình tập trung nhiều hơn, không chứng minh mô hình luôn dự đoán đúng bản chất sinh học của thịt.
 - Với dữ liệu thực tế, nên dùng thêm kiểm tra cảm quan, quy trình bảo quản và tiêu chuẩn an toàn thực phẩm phù hợp.
+- Không dùng kết quả mô hình như kết luận chính thức về an toàn thực phẩm.
 
----
+### Tác giả
 
-## 16. Tác giả
-
-Tác giả: Franceto (ANH PHAP TO)
-
+**Franceto (ANH PHAP TO)**  
 GitHub: [https://github.com/franceto](https://github.com/franceto)
 
----
-
-## 17. License
+### License
 
 Repository hiện chưa khai báo license cụ thể. Nếu muốn public open-source chính thức, nên bổ sung file `LICENSE`, ví dụ MIT License hoặc Apache-2.0.
 
----
+### Support
 
-## 18. Support
+Nếu dự án hữu ích, hãy cho repository một sao.
 
-Nếu dự án hữu ích, hãy cho repository một sao trên GitHub.
+Made by **Franceto (ANH PHAP TO)**
